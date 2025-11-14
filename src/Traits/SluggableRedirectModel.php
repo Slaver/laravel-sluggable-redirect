@@ -23,17 +23,17 @@ trait SluggableRedirectModel
                 return;
             }
 
-            $model->sluggable()->create([
+            $model->sluggableRedirects()->create([
                 'slug' => $originalSlug,
             ]);
         });
 
         static::deleting(function (Model $model): void {
-            $model->sluggable()->delete();
+            $model->sluggableRedirects()->delete();
         });
     }
 
-    public function sluggable(): MorphMany
+    public function sluggableRedirects(): MorphMany
     {
         return $this->morphMany(SluggableRedirect::class, 'sluggable');
     }
