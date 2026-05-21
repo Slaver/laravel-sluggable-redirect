@@ -23,9 +23,10 @@ trait SluggableRedirectModel
                 return;
             }
 
-            $model->sluggableRedirects()->create([
-                'slug' => $originalSlug,
-            ]);
+            SluggableRedirect::firstOrCreate(
+                ['slug' => $originalSlug],
+                ['sluggable_id' => $model->getKey(), 'sluggable_type' => $model->getMorphClass()]
+            );
         });
 
         static::deleting(function (Model $model): void {
